@@ -4,7 +4,11 @@ import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-sec
 
 const secretsManagerClient = new SecretsManagerClient({
   region: config.region,
-  credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
+  credentials: {
+    accessKeyId: config.accessKeyId,
+    secretAccessKey: config.secretAccessKey,
+    sessionToken: config.sessionToken,
+  },
 });
 
 const { SecretString } = await secretsManagerClient.send(new GetSecretValueCommand({ SecretId: config.secretName }));
