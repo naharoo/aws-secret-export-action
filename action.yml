@@ -8,6 +8,9 @@ inputs:
     required: false
     default: 'false'
     description: 'Whether to export the secret properties as environment variables'
+  region:
+    required: false
+    description: 'AWS Region'
   accessKeyId:
     required: true
     description: 'AWS Access Key ID'
