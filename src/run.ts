@@ -1,7 +1,25 @@
 import config from "./config";
-import { info, setOutput } from "@actions/core";
+import { exportVariable, setOutput, setSecret } from "@actions/core";
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
-const greeting = `Hello, ${config.name}!`;
+const secretsManagerClient = new SecretsManagerClient({
+  region: config.region,
+  credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
+});
 
-setOutput("greeting", greeting);
-info(greeting);
+const { SecretString } = await secretsManagerClient.send(new GetSecretValueCommand({ SecretId: config.secretName }));
+
+if (!SecretString) {
+  throw new Error(`Secret ${config.secretName} does not have a value`);
+}
+
+const secret = JSON.parse(SecretString);
+
+for (const [key, value] of Object.entries(secret)) {
+  if (typeof value !== "string") {
+    continue;
+  }
+  setSecret(value);
+  setOutput(key, value);
+  if (config.exportEnv) exportVariable(key, value);
+}

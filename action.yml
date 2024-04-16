@@ -1,12 +1,22 @@
-name: 'template-github-action'
-description: 'Greets someone'
+name: 'aws-secret-export-action'
+description: 'A GitHub Action that allows exporting AWS SecretsManager Secret properties as Output and/or Environment Variables. It only supports JSON secrets'
 inputs:
-  name:
+  secretName:
     required: true
-    description: 'The name to greet'
-outputs:
-  greeting:
-    description: 'The output greeting'
+    description: 'The name of the secret to export'
+  exportEnv:
+    required: false
+    default: 'false'
+    description: 'Whether to export the secret properties as environment variables'
+  accessKeyId:
+    required: true
+    description: 'AWS Access Key ID'
+  secretAccessKey:
+    required: true
+    description: 'AWS Secret Access Key'
+  sessionToken:
+    required: false
+    description: 'AWS Session Token (if available)'
 runs:
   using: 'node20'
   main: 'dist/index.js'

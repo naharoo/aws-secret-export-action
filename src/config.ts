@@ -1,9 +1,15 @@
+import { isNotBlank } from "./utils";
 import { getInput } from "@actions/core";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 
 const configSchema = z.object({
-  name: z.string(),
+  secretName: z.string(),
+  exportEnv: z.ostring().transform(value => value === "true"),
+  region: z.ostring().transform(value => (isNotBlank(value) ? value : undefined)),
+  accessKeyId: z.string(),
+  secretAccessKey: z.string(),
+  sessionToken: z.ostring().transform(value => (isNotBlank(value) ? value : undefined)),
 });
 
 function getActionInputValue(name: string) {
@@ -13,7 +19,12 @@ function getActionInputValue(name: string) {
 
 function parseConfig() {
   return configSchema.parse({
-    name: getActionInputValue("name"),
+    secretName: getActionInputValue("secretName"),
+    exportEnv: getActionInputValue("exportEnv"),
+    region: getActionInputValue("region"),
+    accessKeyId: getActionInputValue("accessKeyId"),
+    secretAccessKey: getActionInputValue("secretAccessKey"),
+    sessionToken: getActionInputValue("sessionToken"),
   });
 }
 
