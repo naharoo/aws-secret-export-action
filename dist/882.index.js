@@ -80,7 +80,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const secretsManagerClient = new _aws_sdk_client_secrets_manager__WEBPACK_IMPORTED_MODULE_2__.SecretsManagerClient({
     region: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].region */ .Z.region,
-    credentials: { accessKeyId: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].accessKeyId */ .Z.accessKeyId, secretAccessKey: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].secretAccessKey */ .Z.secretAccessKey },
+    credentials: {
+        accessKeyId: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].accessKeyId */ .Z.accessKeyId,
+        secretAccessKey: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].secretAccessKey */ .Z.secretAccessKey,
+        sessionToken: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].sessionToken */ .Z.sessionToken,
+    },
 });
 const { SecretString } = await secretsManagerClient.send(new _aws_sdk_client_secrets_manager__WEBPACK_IMPORTED_MODULE_2__.GetSecretValueCommand({ SecretId: _config__WEBPACK_IMPORTED_MODULE_0__/* ["default"].secretName */ .Z.secretName }));
 if (!SecretString) {
