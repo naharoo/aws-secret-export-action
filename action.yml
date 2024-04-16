@@ -1,0 +1,12 @@
+name: 'template-github-action'
+description: 'Greets someone'
+inputs:
+  name:
+    required: true
+    description: 'The name to greet'
+outputs:
+  greeting:
+    description: 'The output greeting'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
